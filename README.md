@@ -7,7 +7,11 @@ In this project, as a data source, I am using data from the Brazilian Government
 
 Read more [Dados.gov.br](https://dados.gov.br/dados/busca?termo=tesouro)
 
-## Main features
+## Main feature
+
+- Terraform Code to deploy resources  on Azure.
+
+![resources](images/scalidraw_architecture)
 
 - Injection of data into azure blob storage, in json format for universal use, using python.
 - Delta Live Table configuration in databricks for automated data injection
@@ -19,6 +23,18 @@ Read more [Dados.gov.br](https://dados.gov.br/dados/busca?termo=tesouro)
 
 ## How to use
 
+- First of all, if you want to use terraform, you need to configure azure cli locally, with the connection.
+- Create a secrets.json file in the .infra/secrets.json path with the information below, referring to your subscription:
+
+{
+    "subscription_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "tenant_id":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "client_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "client_secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+}
+
+- Execute the terraforming plan, to check which features will be created.
+- Then terrafomr apply to actually create the resources. 
 - After cloning this repo, create a folder called *data* and place the downloaded CSVs in it. 
 - create an *.env* file in the root of the project and place the connectionString of the storage blob in it (AZURE_STORAGE_CONNECTION_STRING= *xxxxxx*)
 - Use pip install typer, to run the ingestion function
