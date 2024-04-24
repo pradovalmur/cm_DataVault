@@ -9,7 +9,7 @@ Read more [Dados.gov.br] (https://dados.gov.br/dados/busca?termo=tesouro)
 
 ## Main features
 
-- Injestao de dados no azure blob storage, em formato json para universalidade de utilizacao, usando python.
+- Injection of data into azure blob storage, in json format for universal use, using python.
 - Delta Live Table configuration in databricks for automated data injection
 - Creation of a framework for creating a dataplatform team
 - Data modeling in the Datavault 2.0 model
@@ -29,6 +29,7 @@ Read more [Dados.gov.br] (https://dados.gov.br/dados/busca?termo=tesouro)
 
 ###Work in progress.
 
-Read more [Linkedin](https://www.linkedin.com/in/valmur-prado-39b81522/).
+Read more [Linkedin](https://www.linkedin.com/in/valmur-prado-39b81522/)<br>
+
 Read more [Typer](https://typer.tiangolo.com/)
 
