@@ -11,7 +11,7 @@ Read more [Dados.gov.br](https://dados.gov.br/dados/busca?termo=tesouro)
 
 - Terraform Code to deploy resources  on Azure.
 
-![resources](images/scalidraw_architecture)
+![resources](images/scalidraw_architecture.png)
 
 - Injection of data into azure blob storage, in json format for universal use, using python.
 - Delta Live Table configuration in databricks for automated data injection
