@@ -5,7 +5,7 @@ In this project I intend to show a Data Vault 2.0 modeling using Azure Databrick
 
 In this project, as a data source, I am using data from the Brazilian Government's Open Data Portal, where I use transaction data from the national treasury. 
 
-Read more [Dados.gov.br] (https://dados.gov.br/dados/busca?termo=tesouro)
+Read more [Dados.gov.br](https://dados.gov.br/dados/busca?termo=tesouro)
 
 ## Main features
 
