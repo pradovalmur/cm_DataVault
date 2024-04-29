@@ -24,15 +24,6 @@ Read more [Dados.gov.br](https://dados.gov.br/dados/busca?termo=tesouro)
 ## How to use
 
 - First of all, if you want to use terraform, you need to configure azure cli locally, with the connection.
-- Create a secrets.json file in the .infra/secrets.json path with the information below, referring to your subscription:
-
-{
-    "subscription_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "tenant_id":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "client_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "client_secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-}
-
 - Execute the terraforming plan, to check which features will be created.
 - Then terrafomr apply to actually create the resources. 
 - After cloning this repo, create a folder called *data* and place the downloaded CSVs in it. 

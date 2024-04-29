@@ -1,6 +1,5 @@
 data/*
 .env
-/infra/secrets.json
 /infra/.terraform/*
-/infra/.terraform.lock.hcl
+/infra/.terraform.*
 /infra/terraform.*
