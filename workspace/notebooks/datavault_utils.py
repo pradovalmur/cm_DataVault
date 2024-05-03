@@ -4,7 +4,7 @@ import dlt
 
 def check_and_create_mount(mount_point, source):
 
-    extra_configs = {"fs.azure.account.key.cmstorageacc1251.blob.core.windows.net":dbutils.secrets.get(scope = "lakehouse", key = "secret-sauce")}
+    
 
     try:
         # Check if the mount point already exists
@@ -21,6 +21,21 @@ def check_and_create_mount(mount_point, source):
         except Exception as e:
             print(f"Failed to create mount point '{mount_point}': {str(e)}")
             return False
+
+storageAccountName = "charlesdatabricksadlsno"
+blobContainerName = "aaa"
+mountPoint = "/mnt/files/"
+if not any(mount.mountPoint == mountPoint for mount in dbutils.fs.mounts()):
+  try:
+    dbutils.fs.mount(
+      source = "wasbs://{}@{}.blob.core.windows.net".format(blobContainerName, storageAccountName),
+      mount_point = mountPoint,
+      extra_configs = {"fs.azure.account.key.cmstorageacc1251.blob.core.windows.net":dbutils.secrets.get(scope = "lakehouse", key = "secret-sauce")}
+    )
+    print("mount succeeded!")
+  except Exception as e:
+    print("mount exception", e)        
+
 @dlt.table        
 def stg_investidors():
     try:
