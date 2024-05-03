@@ -19,7 +19,7 @@ def ingestion_investidor():
 
     # Conectar ao Blob Storage da Azure
     blob_service_client = BlobServiceClient.from_connection_string(azure_storage_connection_string)
-    container_client = blob_service_client.get_container_client("cm-landing")
+    container_client = blob_service_client.get_container_client("cmdatalake1251")
 
 
     # Ler o CSV e filtrar os dados com base na coluna especificada
@@ -42,7 +42,7 @@ def ingestion_investidor():
         json_data = json.dumps(data_list)
         
         # Nome do arquivo JSON no Blob Storage (incluindo o caminho da pasta desejada)
-        folder_path = f"investidors/{group_name}/"  # Substitua 'pasta' pelo nome da sua pasta desejada
+        folder_path = f"stg-files/investidors/{group_name}/"  # Substitua 'pasta' pelo nome da sua pasta desejada
         blob_name = f"{folder_path}data_{group_name}.json"
         
         # Enviar o arquivo JSON para o Blob Storage
@@ -58,7 +58,7 @@ def ingestion_operation():
 
     # Conectar ao Blob Storage da Azure
     blob_service_client = BlobServiceClient.from_connection_string(azure_storage_connection_string)
-    container_client = blob_service_client.get_container_client("cm-landing")
+    container_client = blob_service_client.get_container_client("cmdatalake1251")
 
 
     # Ler o CSV e filtrar os dados com base na coluna especificada
@@ -81,7 +81,7 @@ def ingestion_operation():
         json_data = json.dumps(data_list)
         
         # Nome do arquivo JSON no Blob Storage (incluindo o caminho da pasta desejada)
-        folder_path = f"transaction/{group_name}/"  # Substitua 'pasta' pelo nome da sua pasta desejada
+        folder_path = f"stg-files/transaction/{group_name}/"  # Substitua 'pasta' pelo nome da sua pasta desejada
         blob_name = f"{folder_path}data_{group_name}.json"
         
         # Enviar o arquivo JSON para o Blob Storage
