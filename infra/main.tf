@@ -15,8 +15,6 @@ data external account_info {
   program  = ["az", "ad", "signed-in-user", "show", "--query", "{object_id:id}", "-o", "json",]
 }
 
-
-
 locals {
   tags = {
     Environment = "Demo"
@@ -62,7 +60,7 @@ resource "azurerm_storage_data_lake_gen2_path" "this" {
 }
 
 resource "azurerm_key_vault" "this" {
-  name                       = "${var.prefix}storage${random_integer.sufix.result}"
+  name                       = "${var.prefix}keyvault${random_integer.sufix.result}"
   location                   = azurerm_resource_group.this.location
   resource_group_name        = azurerm_resource_group.this.name
   tenant_id                  = data.azurerm_client_config.current.tenant_id

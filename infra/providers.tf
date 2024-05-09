@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "3.72.0"
+      source = "hashicorp/azurerm"
+      version = "3.102.0"
     }
     random = "~> 2.2"
   }
@@ -10,5 +10,5 @@ terraform {
 
 provider "azurerm" {
   features {}
-  skip_provider_registration = true
+  
 }
