@@ -3,13 +3,19 @@ from pyspark.sql.functions import col
 from pyspark.sql.functions import monotonically_increasing_id
 from pyspark.sql.functions import to_date, date_format
 
+spark.conf.set(
+    "fs.azure.account.key.cmstorageacc1251.dfs.core.windows.net",
+    dbutils.secrets.get(scope="lakehouse", key="secret-sauce"))
+
+url_storage = "abfss://cmdatalake1251@cmstorageacc1251.dfs.core.windows.net/stg-files/"    
+
 @dlt.table(
     name="stg_investidors",
     comment=""
 )       
 def stg_investidors():
 
-    df_investidors = spark.readStream.format("cloudFiles").option("cloudFiles.format", "json").option("cloudFiles.schemaLocation", "/mnt/data/investidors_schema").load("/mnt/data/stg-files/investidors/")
+    df_investidors = spark.readStream.format("cloudFiles").option("cloudFiles.format", "json").option("cloudFiles.schemaLocation", "/mnt/data/investidors_schema").load(f"{url_storage}investidors/")
     
     new_column_names = [col(old_column).alias(old_column.replace(' ', '_').lower()) for old_column in df_investidors.columns]
     
@@ -23,14 +29,13 @@ def stg_investidors():
 )           
 def stg_transaction():
     
-    df_transactions = spark.readStream.format("cloudFiles").option("cloudFiles.format", "json").option("cloudFiles.schemaLocation", "/mnt/data/transactions_schema").load("/mnt/data/stg-files/transaction/")
+    df_transactions = spark.readStream.format("cloudFiles").option("cloudFiles.format", "json").option("cloudFiles.schemaLocation", "/mnt/data/transactions_schema").load(f"{url_storage}/transaction/")
 
     new_column_names = [col(old_column).alias(old_column.replace(' ', '_').lower()) for old_column in df_transactions.columns]
     
     df_transactions = df_transactions.select(*new_column_names)
 
     return df_transactions
-
 
 @dlt.view
 def stock():
@@ -89,7 +94,7 @@ def account():
     
 @dlt.table(
     name="hub_stock",
-    comment="This table is a Hub os stock options the hash key is a concatenate the name of titulo and expiration date" )
+    comment="This table is a Hub os stock options the hash key is a concatenate the name of titulo and expiration date")
 def hub_stock():    
     return spark.sql("""
                      select 
@@ -101,8 +106,8 @@ def hub_stock():
                      """)
 
 @dlt.table(
-  name="sat_stock",
-  comment="")
+    name="sat_stock",
+    comment="This table is a satellite os details to stock options")
 def sat_stock():
     return spark.sql("""
                     select 
@@ -186,3 +191,43 @@ def link_account_investidor():
                      from live.account as acc
                      inner join live.investidor as i
                      """)
+    
+@dlt.table(
+    name="hub_investidors",
+    comment="")
+def hub_investidors():
+    return spark.sql("""
+                     select 
+                         sha1(UPPER(TRIM(i.codigo_do_investidor))) as hk_investidor_id,
+                         current_timestamp() as load_dts,
+                         i.codigo_do_investidor as account_id,
+                         "investidor" as source
+                     from live.investidor as i 
+                     """)
+@dlt.table(
+    name="sat_investidor",
+    comment="")
+def sat_investidor():
+    return spark.sql("""
+                     select 
+                        sha1(UPPER(TRIM(i.codigo_do_investidor))) as hk_investidor_id,
+                        i.estado_civil as marital_status,
+                        i.genero as Gender,
+                        i.profissao as occupation, 
+                        i.idade as age
+                     from live.investidor as i
+                     """)
+    
+@dlt.table(
+    name="sat_investidor_address",
+    comment="")
+def sat_investidor_address():
+    return spark.sql("""
+                     select 
+                        sha1(UPPER(TRIM(i.codigo_do_investidor))) as hk_investidor_id,
+                        i.uf_do_investidor as state,
+                        i.cidade_do_investidor as city,
+                        i.pais_do_investidor as country
+                     from live.investidor as i
+                     """)
+
