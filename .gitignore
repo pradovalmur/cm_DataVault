@@ -3,3 +3,5 @@ data/*
 /infra/.terraform/*
 /infra/.terraform.*
 /infra/terraform.*
+.databricks/*
+.vscode/*
